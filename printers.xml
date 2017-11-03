@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<printers>
+    <printer>
+        <brand>品牌1</brand>
+        <version>abc</version>
+        <price>100</price>
+    </printer>
+    <printer>
+        <brand>品牌2</brand>
+        <version>abc</version>
+        <price>150</price>
+    </printer>
+</printers>
