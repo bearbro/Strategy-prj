@@ -1,7 +1,16 @@
+import discount.DiscountStrategy;
+
 public class Printer {
     private String brand;
     private String version;
     private double price;
+    DiscountStrategy discountStrategy;
+    public void setDiscountStrategy(DiscountStrategy discountStrategy){
+        this.discountStrategy=discountStrategy;
+    }
+    public double getdisPrice(){
+        return  discountStrategy.getPrice(price);
+    }
 
     public double getPrice() {
         return price;
