@@ -10,4 +10,16 @@
         <version>abc</version>
         <price>150</price>
     </printer>
+    <discount>
+        <name>无折扣</name>
+        <class>discount.DiscountNo</class>
+    </discount>
+    <discount>
+        <name>扣减固定金额（5元）</name>
+        <class>discount.DiscountANumber</class>
+    </discount>
+    <discount>
+        <name>售价的5%打折售价的5%打折</name>
+        <class>discount.DiscountPercent</class>
+    </discount>
 </printers>

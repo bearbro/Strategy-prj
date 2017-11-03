@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean name="discountANumber5" class="discount.DiscountANumber">
+        <property name="num" value="50.0"/>
+        <property name="name" value="扣减固定金额（50元）"/>
+    </bean>
+
+    <bean name="discountPercent5" class="discount.DiscountPercent">
+        <property name="percent" value="0.05"/>
+        <property name="name" value="九五折"/>
+    </bean>
+
+    <bean name="discountNo" class="discount.DiscountNo">
+        <property name="name" value="无折扣"/>
+    </bean>
+
+    <bean name="discountPercent25" class="discount.DiscountPercent">
+        <property name="name" value="七五折"/>
+        <property name="percent" value="0.25"/>
+    </bean>
+
+</beans>

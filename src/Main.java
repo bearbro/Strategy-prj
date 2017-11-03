@@ -1,3 +1,6 @@
+import discount.DiscountStrategy;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -10,8 +13,8 @@ public class Main {
 
 
     public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException, IOException, SAXException, ParserConfigurationException {
-        Map<String, Printer> printerList = new HashMap();
-        Map<String, String> discountList = new HashMap();
+        Map<String, Printer> printerMap = new HashMap<>();
+        Map<String, DiscountStrategy> discountMap = new HashMap<>();
 
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
@@ -19,12 +22,22 @@ public class Main {
         SAXParserHandler handler = new SAXParserHandler();
         parser.parse("printers.xml", handler);
         for (Printer printer : handler.getPrinterList()) {
-            printerList.put(printer.getBrand()+"|"+printer.getVersion()+"|"+printer.getPrice(),printer);
+            printerMap.put(printer.getBrand()+"|"+printer.getVersion()+"|"+printer.getPrice(),printer);
+        }
+        ApplicationContext context = new ClassPathXmlApplicationContext(
+                "applicationContext.xml"
+        );
+        DiscountStrategy discountStrategy;
+
+        String[] strategyNames = context.getBeanNamesForType(DiscountStrategy.class);
+        for (String strategyName : strategyNames) {
+            discountStrategy = (DiscountStrategy) context.getBean(strategyName);
+            discountMap.put(discountStrategy.getName(),discountStrategy);
         }
 
 
 
-        CalculateJFrame frame = new CalculateJFrame("计算", printerList, discountList);
+        CalculateJFrame frame = new CalculateJFrame("计算", printerMap, discountMap);
 
 
 

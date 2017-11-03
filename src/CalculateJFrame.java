@@ -12,21 +12,21 @@ public class CalculateJFrame extends JFrame implements ActionListener {
     JComboBox cbxDiscount = new JComboBox();
     JButton calculate = new JButton("确定");
     JLabel priceLable = new JLabel();
-    Map<String, Printer> printerList;
-    Map<String, String> discountList;
+    Map<String, Printer> printerMap;
+    Map<String, DiscountStrategy> discountMap;
 
-    public void setPrinterList(Map<String, Printer> printerList) {
-        this.printerList = printerList;
+    public void setPrinterMap(Map<String, Printer> printerMap) {
+        this.printerMap = printerMap;
     }
 
-    public void setDiscountList(Map<String, String> discountList) {
-        this.discountList = discountList;
+    public void setDiscountMap(Map<String, DiscountStrategy> discountMap) {
+        this.discountMap = discountMap;
     }
 
-    CalculateJFrame(String sTitle, Map<String, Printer> printerList, Map<String, String> discountList) {
+    CalculateJFrame(String sTitle, Map<String, Printer> printerMap, Map<String, DiscountStrategy> discountMap) {
         super(sTitle);
-        this.printerList = printerList;
-        this.discountList = discountList;
+        this.printerMap = printerMap;
+        this.discountMap = discountMap;
         Container c = getContentPane();
         c.setLayout(new FlowLayout(FlowLayout.LEFT));
         c.add(new JLabel("产品类型"));
@@ -37,16 +37,17 @@ public class CalculateJFrame extends JFrame implements ActionListener {
         c.add(priceLable);
         calculate.addActionListener(this);
         InitJCheckBox();
-        setSize(300, 120);
+        setSize(400, 100);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
     private void InitJCheckBox() {
-        for (String printerKey : printerList.keySet()) {
+        for (String printerKey : printerMap.keySet()) {
             cbxProduct.addItem(printerKey);
         }
-        for (String discountKey : discountList.keySet()) {
+        for (String discountKey : discountMap.keySet()) {
             cbxDiscount.addItem(discountKey);
         }
     }
@@ -54,20 +55,11 @@ public class CalculateJFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String printerKey = (String) cbxProduct.getSelectedItem();
-        Printer printer = printerList.get(printerKey);
+        Printer printer = printerMap.get(printerKey);
         String discountKey = (String) cbxDiscount.getSelectedItem();
-        String discountName = (String) discountList.get(discountKey);
+        DiscountStrategy discountStrategy = discountMap.get(discountKey);
 
-        DiscountStrategy discountStrategy = null;
-        try {
-            discountStrategy = (DiscountStrategy) Class.forName(discountName).newInstance();
-        } catch (InstantiationException e1) {
-            e1.printStackTrace();
-        } catch (IllegalAccessException e1) {
-            e1.printStackTrace();
-        } catch (ClassNotFoundException e1) {
-            e1.printStackTrace();
-        }
+
         Calculatedprice calculatedprice = new Calculatedprice();
         calculatedprice.setDiscountStrategy(discountStrategy);
         double price = calculatedprice.getPrice(printer.getPrice());
