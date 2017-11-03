@@ -20,5 +20,19 @@
         <property name="name" value="七五折"/>
         <property name="percent" value="0.25"/>
     </bean>
-
+    <bean   class="Printer">
+        <property name="brand" value="品牌1"/>
+        <property name="version" value="型号1"/>
+        <property name="price" value="100"/>
+    </bean>
+    <bean   class="Printer">
+        <property name="brand" value="品牌1"/>
+        <property name="version" value="型号2"/>
+        <property name="price" value="500"/>
+    </bean>
+    <bean  class="Printer">
+        <property name="brand" value="品牌2"/>
+        <property name="version" value="型号1"/>
+        <property name="price" value="110"/>
+    </bean>
 </beans>

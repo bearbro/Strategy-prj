@@ -2,6 +2,7 @@ import discount.DiscountStrategy;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.xml.sax.SAXException;
+
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -16,14 +17,6 @@ public class Main {
         Map<String, Printer> printerMap = new HashMap<>();
         Map<String, DiscountStrategy> discountMap = new HashMap<>();
 
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        SAXParser parser = factory.newSAXParser();
-        //创建SAXParserHandler对象
-        SAXParserHandler handler = new SAXParserHandler();
-        parser.parse("printers.xml", handler);
-        for (Printer printer : handler.getPrinterList()) {
-            printerMap.put(printer.getBrand()+"|"+printer.getVersion()+"|"+printer.getPrice(),printer);
-        }
         ApplicationContext context = new ClassPathXmlApplicationContext(
                 "applicationContext.xml"
         );
@@ -32,13 +25,16 @@ public class Main {
         String[] strategyNames = context.getBeanNamesForType(DiscountStrategy.class);
         for (String strategyName : strategyNames) {
             discountStrategy = (DiscountStrategy) context.getBean(strategyName);
-            discountMap.put(discountStrategy.getName(),discountStrategy);
+            discountMap.put(discountStrategy.getName(), discountStrategy);
+        }
+        Printer printer;
+        String[] printerNames = context.getBeanNamesForType(Printer.class);
+        for (String printerName : printerNames) {
+            printer = (Printer) context.getBean(printerName);
+            printerMap.put(printer.getBrand()+"|"+printer.getVersion()+"| ￥"+printer.getPrice(), printer);
         }
 
-
-
         CalculateJFrame frame = new CalculateJFrame("计算", printerMap, discountMap);
-
 
 
     }

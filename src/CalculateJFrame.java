@@ -37,7 +37,7 @@ public class CalculateJFrame extends JFrame implements ActionListener {
         c.add(priceLable);
         calculate.addActionListener(this);
         InitJCheckBox();
-        setSize(400, 100);
+        setSize(550, 60);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
